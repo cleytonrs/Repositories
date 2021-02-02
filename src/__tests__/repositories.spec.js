@@ -7,16 +7,16 @@ describe("Repositories", () => {
     const response = await request(app)
       .post("/repositories")
       .send({
-        url: "https://github.com/Rocketseat/umbriel",
-        title: "Umbriel",
+        url: "https://github.com/cleytonrs/Repositories",
+        title: "Repositories",
         techs: ["Node", "Express", "TypeScript"]
       });
 
     expect(isUuid(response.body.id)).toBe(true);
 
     expect(response.body).toMatchObject({
-      url: "https://github.com/Rocketseat/umbriel",
-      title: "Umbriel",
+      url: "https://github.com/cleytonrs/Repositories",
+      title: "Repositories",
       techs: ["Node", "Express", "TypeScript"],
       likes: 0
     });
@@ -26,8 +26,8 @@ describe("Repositories", () => {
     const repository = await request(app)
       .post("/repositories")
       .send({
-        url: "https://github.com/Rocketseat/umbriel",
-        title: "Umbriel",
+        url: "https://github.com/cleytonrs/Repositories",
+        title: "Repositories",
         techs: ["Node", "Express", "TypeScript"]
       });
 
@@ -37,8 +37,8 @@ describe("Repositories", () => {
       expect.arrayContaining([
         {
           id: repository.body.id,
-          url: "https://github.com/Rocketseat/umbriel",
-          title: "Umbriel",
+          url: "https://github.com/cleytonrs/Repositories",
+          title: "Repositories",
           techs: ["Node", "Express", "TypeScript"],
           likes: 0
         }
@@ -50,24 +50,24 @@ describe("Repositories", () => {
     const repository = await request(app)
       .post("/repositories")
       .send({
-        url: "https://github.com/Rocketseat/umbriel",
-        title: "Umbriel",
+        url: "https://github.com/cleytonrs/Repositories",
+        title: "Repositories",
         techs: ["Node", "Express", "TypeScript"]
       });
 
     const response = await request(app)
       .put(`/repositories/${repository.body.id}`)
       .send({
-        url: "https://github.com/Rocketseat/unform",
-        title: "Unform",
+        url: "https://github.com/cleytonrs/Repositories",
+        title: "Repositories",
         techs: ["React", "ReactNative", "TypeScript", "ContextApi"]
       });
 
     expect(isUuid(response.body.id)).toBe(true);
 
     expect(response.body).toMatchObject({
-      url: "https://github.com/Rocketseat/unform",
-      title: "Unform",
+      url: "https://github.com/cleytonrs/Repositories",
+      title: "Repositories",
       techs: ["React", "ReactNative", "TypeScript", "ContextApi"]
     });
   });
@@ -80,8 +80,8 @@ describe("Repositories", () => {
     const repository = await request(app)
       .post("/repositories")
       .send({
-        url: "https://github.com/Rocketseat/umbriel",
-        title: "Umbriel",
+        url: "https://github.com/cleytonrs/Repositories",
+        title: "Repositories",
         techs: ["React", "ReactNative", "TypeScript", "ContextApi"]
       });
 
@@ -103,8 +103,8 @@ describe("Repositories", () => {
     const response = await request(app)
       .post("/repositories")
       .send({
-        url: "https://github.com/Rocketseat/umbriel",
-        title: "Umbriel",
+        url: "https://github.com/cleytonrs/Repositories",
+        title: "Repositories",
         techs: ["Node", "Express", "TypeScript"]
       });
 
