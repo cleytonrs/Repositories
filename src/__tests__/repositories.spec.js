@@ -2,21 +2,21 @@ const request = require("supertest");
 const app = require("../app");
 const { validate: isUuid } = require("uuid");
 
-describe("Repositories", () => {
+describe("Repository", () => {
   it("should be able to create a new repository", async () => {
     const response = await request(app)
-      .post("/repositories")
+      .post("/repository")
       .send({
-        url: "https://github.com/cleytonrs/Repositories",
-        title: "Repositories",
+        url: "https://github.com/cleytonrs/back-end-repository",
+        title: "Repository",
         techs: ["Node", "Express", "TypeScript"]
       });
 
     expect(isUuid(response.body.id)).toBe(true);
 
     expect(response.body).toMatchObject({
-      url: "https://github.com/cleytonrs/Repositories",
-      title: "Repositories",
+      url: "https://github.com/cleytonrs/back-end-repository",
+      title: "Repository",
       techs: ["Node", "Express", "TypeScript"],
       likes: 0
     });
@@ -24,21 +24,21 @@ describe("Repositories", () => {
 
   it("should be able to list the repositories", async () => {
     const repository = await request(app)
-      .post("/repositories")
+      .post("/repository")
       .send({
-        url: "https://github.com/cleytonrs/Repositories",
-        title: "Repositories",
+        url: "https://github.com/cleytonrs/back-end-repository",
+        title: "Repository",
         techs: ["Node", "Express", "TypeScript"]
       });
 
-    const response = await request(app).get("/repositories");
+    const response = await request(app).get("/repository");
 
     expect(response.body).toEqual(
       expect.arrayContaining([
         {
           id: repository.body.id,
-          url: "https://github.com/cleytonrs/Repositories",
-          title: "Repositories",
+          url: "https://github.com/cleytonrs/back-end-repository",
+          title: "Repository",
           techs: ["Node", "Express", "TypeScript"],
           likes: 0
         }
@@ -48,48 +48,48 @@ describe("Repositories", () => {
 
   it("should be able to update repository", async () => {
     const repository = await request(app)
-      .post("/repositories")
+      .post("/repository")
       .send({
-        url: "https://github.com/cleytonrs/Repositories",
-        title: "Repositories",
+        url: "https://github.com/cleytonrs/back-end-repository",
+        title: "Repository",
         techs: ["Node", "Express", "TypeScript"]
       });
 
     const response = await request(app)
-      .put(`/repositories/${repository.body.id}`)
+      .put(`/repository/${repository.body.id}`)
       .send({
-        url: "https://github.com/cleytonrs/Repositories",
-        title: "Repositories",
+        url: "https://github.com/cleytonrs/back-end-repository",
+        title: "Repository",
         techs: ["React", "ReactNative", "TypeScript", "ContextApi"]
       });
 
     expect(isUuid(response.body.id)).toBe(true);
 
     expect(response.body).toMatchObject({
-      url: "https://github.com/cleytonrs/Repositories",
-      title: "Repositories",
+      url: "https://github.com/cleytonrs/back-end-repository",
+      title: "Repository",
       techs: ["React", "ReactNative", "TypeScript", "ContextApi"]
     });
   });
 
   it("should not be able to update a repository that does not exist", async () => {
-    await request(app).put(`/repositories/123`).expect(400);
+    await request(app).put(`/repository/123`).expect(400);
   });
 
   it("should not be able to update repository likes manually", async () => {
     const repository = await request(app)
-      .post("/repositories")
+      .post("/repository")
       .send({
-        url: "https://github.com/cleytonrs/Repositories",
-        title: "Repositories",
+        url: "https://github.com/cleytonrs/back-end-repository",
+        title: "Repository",
         techs: ["React", "ReactNative", "TypeScript", "ContextApi"]
       });
 
     await request(app)
-    .post(`/repositories/${repository.body.id}/like`);
+    .post(`/repository/${repository.body.id}/like`);
 
     const response = await request(app)
-      .put(`/repositories/${repository.body.id}`)
+      .put(`/repository/${repository.body.id}`)
       .send({
         likes: 15
       });
@@ -101,16 +101,16 @@ describe("Repositories", () => {
 
   it("should be able to delete the repository", async () => {
     const response = await request(app)
-      .post("/repositories")
+      .post("/repository")
       .send({
-        url: "https://github.com/cleytonrs/Repositories",
-        title: "Repositories",
+        url: "https://github.com/cleytonrs/back-end-repository",
+        title: "Repository",
         techs: ["Node", "Express", "TypeScript"]
       });
 
-    await request(app).delete(`/repositories/${response.body.id}`).expect(204);
+    await request(app).delete(`/repository/${response.body.id}`).expect(204);
 
-    const repositories = await request(app).get("/repositories");
+    const repositories = await request(app).get("/repository");
 
     const repository = repositories.body.find((r) => r.id === response.body.id);
 
@@ -118,6 +118,6 @@ describe("Repositories", () => {
   });
 
   it("should not be able to delete a repository that does not exist", async () => {
-    await request(app).delete(`/repositories/123`).expect(400);
+    await request(app).delete(`/repository/123`).expect(400);
   });
 });

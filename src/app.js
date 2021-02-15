@@ -8,11 +8,11 @@ app.use(cors());
 
 const repositories = [];
 
-app.get("/repositories", (request, response) => {  
+app.get("/repository", (request, response) => {  
   return response.json(repositories);
 });
 
-app.post("/repositories", (request, response) => {   
+app.post("/repository", (request, response) => {   
   const { title, url, techs } = request.body;
 
   const repository = { 
@@ -28,7 +28,7 @@ app.post("/repositories", (request, response) => {
   return response.json(repository);
 });
 
-app.put("/repositories/:id", (request, response) => {
+app.put("/repository/:id", (request, response) => {
   const { id } = request.params;
   const { title, url, techs } = request.body;
     
@@ -50,7 +50,7 @@ app.put("/repositories/:id", (request, response) => {
   return response.json(repository);
 });
 
-app.delete("/repositories/:id", (request, response) => {
+app.delete("/repository/:id", (request, response) => {
   const { id } = request.params;
 
   const repositoryIndex = repositories.findIndex(repository => repository.id == id);
@@ -63,7 +63,7 @@ app.delete("/repositories/:id", (request, response) => {
   return response.status(204).send();
 });
 
-app.post("/repositories/:id/like", (request, response) => {
+app.post("/repository/:id/like", (request, response) => {
   const { id } = request.params;
 
   const repositoryIndex = repositories.findIndex(repository => repository.id == id);

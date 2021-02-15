@@ -4,15 +4,15 @@ const app = require("../app");
 describe("Likes", () => {
   it("should be able to give a like to the repository", async () => {
     const repository = await request(app)
-      .post("/repositories")
+      .post("/repository")
       .send({
-        url: "https://github.com/cleytonrs/Repositories",
-        title: "Repositories",
+        url: "https://github.com/cleytonrs/back-end-repository",
+        title: "Repository",
         techs: ["Node", "Express", "TypeScript"]
       });
 
     let response = await request(app).post(
-      `/repositories/${repository.body.id}/like`
+      `/repository/${repository.body.id}/like`
     );
 
     expect(response.body).toMatchObject({
@@ -20,7 +20,7 @@ describe("Likes", () => {
     });
 
     response = await request(app).post(
-      `/repositories/${repository.body.id}/like`
+      `/repository/${repository.body.id}/like`
     );
 
     expect(response.body).toMatchObject({
@@ -30,7 +30,7 @@ describe("Likes", () => {
 
   it("should not be able to like a repository that does not exist", async () => {
     await request(app)
-      .post(`/repositories/123/like`)
+      .post(`/repository/123/like`)
       .expect(400);
   });
 });
